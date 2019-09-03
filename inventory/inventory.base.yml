@@ -1,0 +1,50 @@
+all:
+  vars:
+    ansible_become: true
+    ansible_ssh_user: mbp
+    gcp_project: PROJECT
+    gcp_cred_kind: "serviceaccount"
+    gcp_cred_file: "~/gcp_sa.json"
+    gcp_base: "https://www.googleapis.com/compute/v1/projects/"
+    zone: "europe-west3-b"
+    region: "europe-west3"
+    rep_data_dir: "/data/fastfs"
+    arb_data_dir: "/var/lib/mongodb"
+    mongo_usr: "octohedron"
+    mongo_pw: "123456"
+
+    replicas:
+      - m-cl5-rs-0
+      - m-cl5-rs-1
+      - m-cl5-rs-2
+      - m-cl5-rs-3
+
+    arbiters:
+      - m-cl5-arb-0
+      - m-cl5-arb-1
+
+    mongos:
+      - m-cl5-mongos
+
+    config:
+      - m-cl5-config
+
+    rs:
+      m-cl5-arb-0: shrs0
+      m-cl5-rs-0: shrs0
+      m-cl5-rs-1: shrs0
+      m-cl5-arb-1: shrs1
+      m-cl5-rs-2: shrs1
+      m-cl5-rs-3: shrs1
+
+    shardrs:
+      shrs0: rs0
+      shrs1: rs1
+
+    config_server: m-cl5-config.c.PROJECT.internal
+
+    mongos_server: m-cl5-mongos.c.PROJECT.internal
+
+    shards:
+      - shrs0/m-cl5-rs-0.c.PROJECT.internal:27017,m-cl5-rs-1.c.PROJECT.internal:27017,m-cl5-arb-0.c.PROJECT.internal:27017
+      - shrs1/m-cl5-rs-2.c.PROJECT.internal:27017,m-cl5-rs-3.c.PROJECT.internal:27017,m-cl5-arb-1.c.PROJECT.internal:27017

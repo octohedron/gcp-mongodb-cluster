@@ -1,0 +1,10 @@
+---
+- import_playbook: gcp_common.yml # common provision
+- import_playbook: gcp_xfs.yml # set up xfs disks
+- import_playbook: t_gcp_node_p.yml # provision replica set nodes
+- import_playbook: t_gcp_arbiter.yml # provision shard arbiters
+- import_playbook: t_gcp_cluster.yml # create replica sets in shards
+- import_playbook: t_gcp_node_auth.yml # enable auth in nodes
+- import_playbook: t_gcp_arb_auth.yml # enable auth in arbiters
+- import_playbook: t_gcp_config.yml # provision config server
+- import_playbook: t_gcp_mongos.yml # provision mongos server

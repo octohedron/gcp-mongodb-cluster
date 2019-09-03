@@ -1,0 +1,13 @@
+auth_kind: serviceaccount
+service_account_file: ~/gcp_sa.json
+plugin: gcp_compute
+projects:
+- PROJECT
+filters:
+- name = cl7*
+groups:
+  replicas: "'-n' in name"
+  arbiters: "'-ab' in name"
+  mongos: "'-mg' in name"
+  config: "'-cf' in name"
+  rsprimaries: "'-0-n' in name or '-1-n' in name"

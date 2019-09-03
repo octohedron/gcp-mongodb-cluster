@@ -1,0 +1,97 @@
+---
+- name: Launch nodes
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    ansible_become: false
+    ansible_ssh_user: t
+
+  tasks:
+    - name: Create replicas disks
+      include_tasks: t_create_disk.yml
+      vars:
+        disk_type: "pd-standard"
+        machine: "{{ item }}"
+      loop: "{{ replicas }}"
+
+    - name: Create replicas XFS disks
+      include_tasks: t_create_disk_xfs.yml
+      vars:
+        disk_type: "pd-standard" # Change this to "pd-ssd" for production
+        machine: "{{ item }}-xfs"
+      loop: "{{ replicas }}"
+
+    - name: Launch replicas instances
+      include_tasks: t_launch_instance.yml
+      vars:
+        machine: "{{ item }}"
+        disks:
+          - auto_delete: true
+            boot: true
+            index: 0
+            source:
+              selfLink: "{{ gcp_base }}{{ gcp_project }}/zones/{{ zone }}/disks/{{ item }}"
+          - auto_delete: true
+            boot: false
+            index: 1
+            source:
+              selfLink: "{{ gcp_base }}{{ gcp_project }}/zones/{{ zone }}/disks/{{ item }}-xfs"
+      loop: "{{ replicas }}"
+
+    - name: Create arbiter disks
+      include_tasks: t_create_disk.yml
+      vars:
+        disk_type: "pd-standard"
+        machine: "{{ item }}"
+      loop: "{{ arbiters }}"
+
+    - name: Launch arbiter instances
+      include_tasks: t_launch_instance.yml
+      vars:
+        machine: "{{ item }}"
+        disks:
+          - auto_delete: true
+            boot: true
+            index: 0
+            source:
+              selfLink: "{{ gcp_base }}{{ gcp_project }}/zones/{{ zone }}/disks/{{ item }}"
+      loop: "{{ arbiters }}"
+
+    - name: Create mongos disks
+      include_tasks: t_create_disk.yml
+      vars:
+        disk_type: "pd-standard"
+        machine: "{{ item }}"
+      loop: "{{ mongos }}"
+
+    - name: Launch mongos instances
+      include_tasks: t_launch_instance.yml
+      vars:
+        machine: "{{ item }}"
+        disks:
+          - auto_delete: true
+            boot: true
+            index: 0
+            source:
+              selfLink: "{{ gcp_base }}{{ gcp_project }}/zones/{{ zone }}/disks/{{ item }}"
+      loop: "{{ mongos }}"
+
+    - name: Create config disks
+      include_tasks: t_create_disk.yml
+      vars:
+        disk_type: "pd-standard"
+        machine: "{{ item }}"
+      loop: "{{ config }}"
+
+    - name: Launch config instances
+      include_tasks: t_launch_instance.yml
+      vars:
+        machine: "{{ item }}"
+        disks:
+          - auto_delete: true
+            boot: true
+            index: 0
+            source:
+              selfLink: "{{ gcp_base }}{{ gcp_project }}/zones/{{ zone }}/disks/{{ item }}"
+      loop: "{{ config }}"

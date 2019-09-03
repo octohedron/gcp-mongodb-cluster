@@ -1,0 +1,16 @@
+- name: Create an instance
+  gcp_compute_instance:
+    state: present
+    name: "{{ machine }}"
+    machine_type: f1-micro
+    disks: "{{ disks }}"
+    network_interfaces:
+      - network: null
+        access_configs:
+          - name: "External NAT"
+            type: "ONE_TO_ONE_NAT"
+    zone: "{{ zone }}"
+    project: "{{ gcp_project }}"
+    auth_kind: "{{ gcp_cred_kind }}"
+    service_account_file: "{{ gcp_cred_file }}"
+  register: instance

@@ -1,0 +1,41 @@
+---
+- name: Format and mount XFS filesystem
+  hosts: replicas
+  gather_facts: yes
+  become: yes
+  become_user: root
+
+  tasks:
+    - name: Print vars
+      debug:
+        msg: vars {{ ansible_hostname }}
+
+    - name: Format disk {{ ansible_hostname }}-xfs
+      filesystem:
+        fstype: xfs
+        dev: /dev/sdb
+        opts: "-L {{ ansible_hostname }}-x"
+        force: no
+
+    - name: Create mount directory
+      file:
+        path: /data/fastfs
+        state: directory
+        owner: mongodb
+        group: mongodb
+        mode: "0775"
+
+    - name: Mount up device {{ 'LABEL=%s-x' | format(ansible_hostname) }}
+      mount:
+        path: "/data/fastfs/"
+        src: "{{ 'LABEL=%s-x' | format(ansible_hostname) }}"
+        fstype: xfs
+        state: mounted
+
+    - name: Change owner after mounting
+      file:
+        path: /data/fastfs
+        state: directory
+        owner: mongodb
+        group: mongodb
+        mode: "0775"

@@ -1,0 +1,50 @@
+all:
+  vars:
+    ansible_become: true
+    ansible_ssh_user: mbp
+    gcp_project: PROJECT
+    gcp_cred_kind: serviceaccount
+    gcp_cred_file: ~/gcp_sa.json
+    gcp_base: https://www.googleapis.com/compute/v1/projects/
+    zone: europe-west3-b
+    region: europe-west3
+    rep_data_dir: /data/fastfs
+    arb_data_dir: /var/lib/mongodb
+    mongo_usr: octohedron
+    mongo_pw: '123456'
+    replicas:
+    - cl7-0-n
+    - cl7-1-n
+    - cl7-2-n
+    - cl7-3-n
+    arbiters:
+    - cl7-0-ab
+    - cl7-1-ab
+    mongos:
+    - cl7-mg
+    config:
+    - cl7-cf
+    rs:
+      cl7-0-n: shrs0
+      cl7-1-n: shrs1
+      cl7-2-n: shrs0
+      cl7-3-n: shrs1
+      cl7-0-ab: shrs0
+      cl7-1-ab: shrs1
+    shardrs:
+      shrs0: rs0
+      shrs1: rs1
+    config_server: cl7-cf.c.PROJECT.internal
+    mongos_server: cl7-mg.c.PROJECT.internal
+    shards:
+    - shrs0/cl7-0-n.c.PROJECT.internal:27017,cl7-2-n.c.PROJECT.internal:27017,cl7-0-ab.c.PROJECT.internal:27017
+    - shrs1/cl7-1-n.c.PROJECT.internal:27017,cl7-3-n.c.PROJECT.internal:27017,cl7-1-ab.c.PROJECT.internal:27017
+    rmem:
+      rs0:
+      - cl7-0-n.c.PROJECT.internal
+      - cl7-2-n.c.PROJECT.internal
+      - cl7-0-ab.c.PROJECT.internal
+      rs1:
+      - cl7-1-n.c.PROJECT.internal
+      - cl7-3-n.c.PROJECT.internal
+      - cl7-1-ab.c.PROJECT.internal

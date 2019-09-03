@@ -1,0 +1,10 @@
+---
+- name: Test playbook
+  hosts: all
+  gather_facts: no
+  become: yes
+  become_user: root
+  
+  tasks:
+    - name: test connection
+      ping:

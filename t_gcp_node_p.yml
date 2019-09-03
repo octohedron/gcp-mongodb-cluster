@@ -1,0 +1,56 @@
+---
+- name: Provision replica set nodes
+  hosts: replicas
+  gather_facts: no
+  sudo: yes
+
+  tasks:
+    - name: Print vars
+      debug:
+        msg: "{{ 'rs' in hostvars[inventory_hostname]['name'] }}"
+
+    - name: Set MongoDB conf without auth to set up root user
+      template:
+        src: ../templates/mnode-noauth.j2
+        dest: /etc/mongod.conf
+        owner: root
+        group: root
+        mode: "0644"
+      with_items:
+        - {
+            data_dir: "{{ rep_data_dir }}",
+            rs: "{{ rs[hostvars[inventory_hostname]['name']] }}",
+            local_ip: "{{ hostvars[inventory_hostname]['name'] }}.c.{{ gcp_project }}.internal",
+          }
+
+    - name: Restart the mongod service
+      service:
+        name: mongod
+        state: restarted
+
+    - name: Add MongoDB user
+      mongodb_user:
+        database: admin
+        name: "{{ mongo_usr }}"
+        password: "{{ mongo_pw }}"
+        state: present
+        roles: root
+
+    - name: Set MongoDB conf to enable replication
+      template:
+        src: ../templates/mnode-replica.j2
+        dest: /etc/mongod.conf
+        owner: root
+        group: root
+        mode: "0644"
+      with_items:
+        - {
+            data_dir: "{{ rep_data_dir }}",
+            rs: "{{ rs[hostvars[inventory_hostname]['name']] }}",
+            local_ip: "{{ hostvars[inventory_hostname]['name'] }}.c.{{ gcp_project }}.internal",
+          }
+
+    - name: Restart the mongod service
+      service:
+        name: mongod
+        state: restarted

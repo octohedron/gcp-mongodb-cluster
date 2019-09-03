@@ -1,0 +1,22 @@
+---
+- name: Provision replica set nodes
+  hosts: rsprimaries
+  gather_facts: no
+  sudo: yes
+
+  tasks:
+    # - name: Print vars
+    #   debug:
+    #     msg: Ensure replicasets exists {{ rmem[shardrs[rs[hostvars[inventory_hostname]['name']]]] }} exists {{ inventory_hostname }}
+
+    - name: Wait 20 for nodes to become available
+      wait_for_connection:
+        timeout: 20
+    - name: Ensure replicasets exists {{ rmem[shardrs[rs[hostvars[inventory_hostname]['name']]]] }} exists {{ inventory_hostname }}
+      mongodb_replicaset:
+        login_host: "{{ inventory_hostname }}"
+        login_user: "{{ mongo_usr }}"
+        login_password: "{{ mongo_pw }}"
+        replica_set: "{{ rs[hostvars[inventory_hostname]['name']] }}"
+        validate: False
+        members: "{{ rmem[shardrs[rs[hostvars[inventory_hostname]['name']]]] }}"
