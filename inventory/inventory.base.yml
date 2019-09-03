@@ -2,7 +2,7 @@ all:
   vars:
     ansible_become: true
     ansible_ssh_user: mbp
-    gcp_project: PROJECT
+    gcp_project: PROJECT # Change this to your project
     gcp_cred_kind: "serviceaccount"
     gcp_cred_file: "~/gcp_sa.json"
     gcp_base: "https://www.googleapis.com/compute/v1/projects/"
