@@ -46,7 +46,7 @@ $ ./launch.sh
 + The `configure.py` python script configures the `inventory` variables and the google compute inventory.
 + The launch script Launches the nodes, with the ansible command `ansible-playbook ./launch_nodes.yml -i inventory` which
   + Launches the instances based on the ubuntu 18.04 image
-  + Creates the disks. etc.
+  + Creates the disks, etc.
   
 You can edit this file `launch_nodes.yml` if you would like a different image, type of disk, instance type, etc.
 For production you'd need a better instance type, i.e. not `f1-micro` and larger ssd disks, i.e. `"pd-ssd"` instead of `"pd-standard"`, etc.
@@ -66,7 +66,7 @@ After all of this runs, you can go to your google compute engine page, find the 
 For example
 
 ```
-$ mongo --host 34.89.247.66:27017 \
+$ mongo --host IP_ADDRESS:27017 \
         -u 'octohedron' -p '123456' --authenticationDatabase 'admin'
 MongoDB shell version v4.0.11
 MongoDB server version: 4.0.12
@@ -89,7 +89,7 @@ mongos> sh.status()
       config.system.sessions
         shard key: { "_id" : 1 }
 ```
-*trimmed for clarirty*
+*trimmed for clarirty, replace IP_ADDRESS with your mongos external IP.*
 
 ## Additional notes
 
