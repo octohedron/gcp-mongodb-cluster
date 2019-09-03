@@ -1,6 +1,5 @@
 from os.path import dirname, realpath
 import sys
-# from pprint import pprint
 from ruamel import yaml
 
 import argparse
@@ -28,7 +27,6 @@ vars_base = vars_p + "/inventory/inventory.base.yml"
 gcp_inv = vars_p + "/inventory/inventory.gcp.yml"
 vars_file = vars_p + "/inventory/inventory.yml"
 
-# Make project and rmem top-level variables for using in the gcp inventory
 project = ""
 replicas = []
 
@@ -104,7 +102,6 @@ with open(gcp_inv, 'r+') as f:
     inv["projects"] = [project]
     # Set filters to cluster identifier
     inv["filters"] = ["name = " + args.id + "*"]
-    # pprint(inv)
     rsprimaries = ""
     for i in range(0, args.shards):
         rsprimaries += "'-{0}-n' in name".format(i)
