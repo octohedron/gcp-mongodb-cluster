@@ -25,17 +25,25 @@ With this project you can launch your own MongoDB cluster with up to thousands o
 
 ## Steps
 
-1) Edit the `inventory/inventory.base.yml` file, changing `PROJECT` with your google compute engine project, you don't have to edit the rest of the configuration in the `inventory.base.yml` but it's contents are used for the inventory file that will be used, i.e. `inventory.yml`, for production you should change the `username/password` of course, and the zone, it's configured for frankfurt's `europe-west3-b`.
-2) Configure the project with the `configure.py` script
-3) Place your service account JSON file downloaded from the google compute engine website in `~/gcp_sa.json`, you can change the path if you want editing the `inventory.gcp.yml` file
++ Edit the `inventory/inventory.base.yml` file, changing
+  + `PROJECT` with your google compute engine project
+  + Change the `username` and `password`
+  + Set your desired zone, it's configured for frankfurt's `europe-west3-b`.
+  + Change the ansible ssh user, which should be your configured user in Google Compute Engine so the ssh keys are copied automatically when creating the instances.
+
+NOTE: *You don't have to edit the rest of the configuration in the `inventory.base.yml` but it's contents are used for the inventory file that will be used, i.e. `inventory.yml`*
+
++ Configure the project with the `configure.py` script
 
 ```
 $ python3 configure.py --shards 2 --id cl7
 ```
 
++ Place your service account JSON file downloaded from the google compute engine website in `~/gcp_sa.json`, you can change the path if you want editing the `inventory.gcp.yml` file
+
 That will configure everything, first parameter of the script is the amount of shards, the second one is the cluster identifier which can't be more than 3 characters long, i.e. `cl8` or any combination of 3 characters.
 
-4) Run the launch script
++ Run the launch script
 
 ```
 $ ./launch.sh
