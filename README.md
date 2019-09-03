@@ -45,7 +45,7 @@ $ ./launch.sh
 
 + The `configure.py` python script configures the `inventory` variables and the google compute inventory.
 + The launch script Launches the nodes, with the ansible command `ansible-playbook ./launch_nodes.yml -i inventory` which
-  + Launches configures the instances based on the ubuntu 18.04 image
+  + Launches the instances based on the ubuntu 18.04 image
   + Creates the disks. etc.
   
 You can edit this file `launch_nodes.yml` if you would like a different image, type of disk, instance type, etc.
