@@ -20,7 +20,7 @@ With this project you can launch your own MongoDB cluster with up to thousands o
 
 + `Ansible`, `Python` and `google-auth` python libraries
 + A google compute cloud account with billing enabled for the API's
-+ A JSON service account file with the required permissions, tested with project owner
++ A JSON service account file with the required permissions
 + A compute engine project
 
 ## Steps
