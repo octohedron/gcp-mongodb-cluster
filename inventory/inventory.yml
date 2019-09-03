@@ -1,7 +1,7 @@
 all:
   vars:
     ansible_become: true
-    ansible_ssh_user: mbp
+    ansible_ssh_user: octohedron
     gcp_project: PROJECT
     gcp_cred_kind: serviceaccount
     gcp_cred_file: ~/gcp_sa.json
