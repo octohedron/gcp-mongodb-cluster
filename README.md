@@ -6,15 +6,16 @@ With this project you can launch your own MongoDB cluster with up to thousands o
 
 ## Features
 
-+ Latest `MongoDB version 4.0.12`, can be easily configured as well for other releases
++ Easy to configure, with `ansible` YAML
++ Set any mount of shards
++ Latest `MongoDB version 4.0.12`, and can be easily upgraded
 + `XFS` filesystem disks/partitions for the MongoDb storage
 + Authentication enabled with `KeyFile` in all nodes 
 + Password protected with root user
 + Configured for easy vertical scaling
-+ 2 Replicas per shard and 1 arbiter
++ 2 Replicas set nodes per shard and 1 arbiter
 + 1 Config server
 + 1 Mongos
-+ Tested with 10 shards+, or 32 VMs.
 
 ## What do you need?
 
