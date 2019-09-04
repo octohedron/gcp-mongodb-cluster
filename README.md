@@ -1,13 +1,13 @@
 # GCP configurable MongoDB cluster
 
-With this project you can launch your own MongoDB cluster with up to thousands of shards with just a few commands in Google Compute Cloud.
+With this project you can launch your own MongoDB cluster with up to thousands of shards in Google Compute Cloud with just a few commands.
 
 ---
 
 ## Features
 
 + Easy to configure, with `ansible` YAML
-+ Set any mount of shards
++ Set any amount of shards
 + Latest `MongoDB version 4.0.12`
 + `XFS` file system for the replication nodes storage
 + Authentication enabled with `KeyFile` in all nodes 
