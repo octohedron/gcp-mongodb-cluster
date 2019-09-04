@@ -1,7 +1,7 @@
 all:
   vars:
     ansible_become: true
-    ansible_ssh_user: octohedron
+    ansible_ssh_user: ssh_user
     gcp_project: PROJECT
     gcp_cred_kind: serviceaccount
     gcp_cred_file: ~/gcp_sa.json
@@ -10,7 +10,7 @@ all:
     region: europe-west3
     rep_data_dir: /data/fastfs
     arb_data_dir: /var/lib/mongodb
-    mongo_usr: octohedron
+    mongo_usr: mongouser
     mongo_pw: '123456'
     replicas:
     - cl7-0-n

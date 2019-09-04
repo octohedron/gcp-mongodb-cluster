@@ -75,7 +75,7 @@ For example
 
 ```
 $ mongo --host IP_ADDRESS:27017 \
-        -u 'octohedron' -p '123456' --authenticationDatabase 'admin'
+        -u 'mongouser' -p '123456' --authenticationDatabase 'admin'
 MongoDB shell version v4.0.11
 MongoDB server version: 4.0.12
 mongos> sh.status()
