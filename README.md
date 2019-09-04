@@ -8,7 +8,7 @@ With this project you can launch your own MongoDB cluster with up to thousands o
 
 + Easy to configure, with `ansible` YAML
 + Set any amount of shards
-+ Latest `MongoDB version 4.0.12`, you can change it to 4.2 very easily, or any other version in a single place in and it would set the whole cluster to that version
++ Latest MongoDB version on the ubuntu 18.04 repos, which is`4.0.12`, you can change it to 4.2, or any other version in a single place in and it would set the whole cluster to that version
 + `XFS` file system for the replication nodes storage
 + Authentication enabled with `KeyFile` in all nodes 
 + Password protected with root user
